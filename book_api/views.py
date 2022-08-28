@@ -3,15 +3,16 @@ from rest_framework.response import Response
 from rest_framework import status
 from book_api.models import Book
 from book_api.serializer import BookSerializer
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework import generics
 
 
 class BookList(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['title']
+    ordering_fields = ['quantity', 'publish_date', 'number_of_pages']
     
 class BookCreate(APIView):
     def post(self, request):
